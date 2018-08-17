@@ -1,0 +1,39 @@
+{
+  "name": "bem-react-boilerplate",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@typed/compose": "^1.0.0",
+    "bem-tools-core": "0.0.3",
+    "bem-tools-create": "2.3.0",
+    "deep-assign": "^2.0.0",
+    "react": "16.4.1",
+    "react-app-rewired": "1.5.2",
+    "react-dom": "16.4.1",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "jest",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.1.4",
+    "@types/react": "^16.4.6",
+    "@types/react-dom": "^16.0.6",
+    "bem-react-core": "^2.0.0",
+    "jest-cli": "23.3.0",
+    "react-app-rewire-typescript": "^2.0.2",
+    "ts-jest": "^23.0.0",
+    "tslint": "^5.10.0",
+    "tslint-react": "^3.6.0",
+    "typescript": "^2.9.2"
+  },
+  "jest": {
+    "transform": {
+      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/node_modules/react-scripts/config/jest/fileTransform.js",
+      "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest"
+    }
+  }
+}
