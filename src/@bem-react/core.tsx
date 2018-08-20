@@ -80,11 +80,15 @@ type ModMatch = Record<string, string | boolean | number>;
 export function mod<P>(match: ModMatch, cb?: ModBody<P>) {
     return function(Block: React.SFC<P>) {
         return function(props: P) {
-            const newProps = setBem(props, { mods: match });
+            if (matchSubset(props, match)) {
+                const newProps = setBem(props, { mods: match });
 
-            return cb
-                ? cb(Block, newProps)
-                : <Block {...newProps} />;
+                return cb
+                    ? cb(Block, newProps)
+                    : <Block {...newProps} />;
+            }
+
+            return <Block {...props}/>;
         };
     };
 }
@@ -101,4 +105,10 @@ export const ensureProp = (predicate: boolean, prop: any) => predicate ? prop : 
 
 export function setBem<P>(props: P, bem: Partial<IBlock | IElem>) {
     return Object.assign({}, props, { bem: deepAssign({}, (props as any).bem, bem) }); // tslint:disable-line:no-any
+}
+
+export function matchSubset(props: Record<string, any>, match: Record<string, any>) { // tslint:disable-line:no-any
+    return Object.keys(match).every(key => {
+        return props[key] === match[key];
+    });
 }

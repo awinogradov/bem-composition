@@ -21,6 +21,7 @@ const Header = elem('Header', ({ bem }) => (
 
 export interface IAppProps {
     onClick?: React.MouseEventHandler<HTMLDivElement>;
+    theme?: 'islands' | 'normal';
 }
 
 export const App = block<IAppProps>('App', ({ bem, onClick }) => (
