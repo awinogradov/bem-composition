@@ -4,7 +4,7 @@ import { Link } from '../../Link/Link@desktop';
 
 import { Logo } from '../Logo/App-Logo';
 import { Title } from '../Title/App-Title';
-import { cn } from '../App';
+import { elem } from '../App';
 
 import './App-Header.css';
 
@@ -13,7 +13,7 @@ export interface IAppHeaderProps {
 }
 
 export const Header: React.SFC<IAppHeaderProps> = ({ title }) => (
-    <header className={cn('Header')}>
+    <header className={elem('Header')}>
         <Logo />
         <Title text={title} />
         <Link url="http://yandex.ru" text="Interactive link" />

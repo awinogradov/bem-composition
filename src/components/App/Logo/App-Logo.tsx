@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import { cn } from '../App';
+import { elem } from '../App';
 
 import './App-Logo.css';
 import logo from './App-Logo.svg';
 
-export const Logo: React.SFC = () => <img src={logo} className={cn('Logo')} />;
+export const Logo: React.SFC = () => <img src={logo} className={elem('Logo')} />;

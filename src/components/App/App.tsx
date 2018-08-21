@@ -1,13 +1,18 @@
 import * as React from 'react';
 
-import { react } from '../../@bem-react/naming';
+import { bem } from '../../@bem-react/naming/react';
 import { withClassName } from '../../@bem-react/className';
+import { compose } from '@typed/compose';
 
 import { Header } from './Header/App-Header';
+import { Icon } from '../Icon/Icon';
+import { IconTypeCross } from '../Icon/_type/Icon_type_cross';
+
+const IconWithMods = compose(IconTypeCross)(Icon);
 
 import './App.css';
 
-export const cn = react.block('App');
+export const { block, elem } = bem('App');
 
 export interface IAppProps {
     onClick?: React.MouseEventHandler<HTMLDivElement>;
@@ -19,10 +24,11 @@ export interface IAppProps {
 const AppPresenter: React.SFC<IAppProps> = ({ className, onClick }) => (
     <div className={className} onClick={onClick}>
         <Header title="Welcome to React" />
-        <p className={cn('Intro', { theme: 'shit' })}>
+        <p className={elem('Intro', { theme: 'shit' })}>
             To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+        <IconWithMods size="s" type="cross" mix={elem('Icon')} />
     </div>
 );
 
-export const App = withClassName(cn)(AppPresenter);
+export const App = withClassName(block)(AppPresenter);

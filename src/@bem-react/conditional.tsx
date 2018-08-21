@@ -15,10 +15,10 @@ export function matchSubset(props: Record<string, any>, match: Record<string, an
 
 export function withCondition<P>(condition: ModMatch, cb?: ModBody<P>) {
     return function(Block: React.SFC<P>) {
-        const Conditional = function(props: any) { // tslint:disable-line:no-any
+        const Conditional = function(props: P) {
             if (matchSubset(props, condition)) {
                 const newProps = setConditions(props, {
-                    ...props.conditions,
+                    ...(props as any).conditions, // tslint:disable-line:no-any
                     ...condition,
                 });
 
