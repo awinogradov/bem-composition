@@ -8,7 +8,8 @@ import {
     KeyboardEventHandler,
 } from 'react';
 
-import { ValidComponent, ensureProp, setBem } from '../../@bem-react/core';
+import { setConditions } from '../../@bem-react/conditional';
+import { ensureProp } from '../../utils';
 
 export interface IInteractiveProps {
     onBlur?: FocusEventHandler<HTMLElement>;
@@ -29,11 +30,11 @@ export interface IInteractiveState {
     pressed?: boolean;
 }
 
-export function interactive<
-    P extends IInteractiveProps,
-    S extends IInteractiveState
->(WrappedComponent: ValidComponent<P>) {
-    return (
+export function withInteractive<
+    P extends IInteractiveProps = IInteractiveProps,
+    S extends IInteractiveState = IInteractiveState
+>() {
+    return (WrappedComponent: any): React.SFC<P> => { // tslint:disable-line:no-any
         class InteractiveContainer extends React.Component<P, S> {
             constructor(props: P) {
                 super(props);
@@ -75,12 +76,10 @@ export function interactive<
                     onClick: ensureProp(!disabled, this.onClick),
                 }, this.props);
 
-                const newProps = setBem(props, {
-                    mods: {
-                        disabled,
-                        focused: !disabled && focused,
-                        pressed: !disabled && pressed,
-                    },
+                const newProps = setConditions(props, {
+                    disabled,
+                    focused: !disabled && focused,
+                    pressed: !disabled && pressed,
                 });
 
                 return <WrappedComponent {...newProps} />;
@@ -158,5 +157,7 @@ export function interactive<
                 document.removeEventListener('dragend', this.docOnMouseUp);
             }
         }
-    );
+
+        return (props: any) => <InteractiveContainer {...props} />; // tslint:disable-line:no-any
+    };
 }

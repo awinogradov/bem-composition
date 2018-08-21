@@ -1,34 +1,30 @@
 import * as React from 'react';
 
-import { block, elem } from '../../@bem-react/core';
+import { react } from '../../@bem-react/naming';
+import { withClassName } from '../../@bem-react/className';
 
-import { Link } from '../Link/Link@desktop';
+import { Header } from './Header/App-Header';
 
-import { Logo } from './Logo/App-Logo';
-import { Title } from './Title/App-Title';
-
-import logo from './App.svg';
+// import { Link } from '../Link/Link@desktop';
 
 import './App.css';
 
-const Header = elem('Header', ({ bem }) => (
-    <header className={bem.className}>
-        <Logo src={logo} />
-        <Title text="Welcome to React" />
-        <Link url="http://yandex.ru" text="Intractive link" />
-    </header>
-));
+export const cn = react.block('App');
 
 export interface IAppProps {
     onClick?: React.MouseEventHandler<HTMLDivElement>;
     theme?: 'islands' | 'normal';
+    type?: 'button';
+    className?: string;
 }
 
-export const App = block<IAppProps>('App', ({ bem, onClick }) => (
-    <div className={bem.className} onClick={onClick}>
-        <Header/>
-        <p className={bem.elem('Intro', { theme: 'shit' })}>
+const AppPresenter: React.SFC<IAppProps> = ({ className, onClick }) => (
+    <div className={className} onClick={onClick}>
+        <Header title="Welcome to React" />
+        <p className={cn('Intro', { theme: 'shit' })}>
             To get started, edit <code>src/App.js</code> and save to reload.
         </p>
     </div>
-));
+);
+
+export const App = withClassName(cn)(AppPresenter);

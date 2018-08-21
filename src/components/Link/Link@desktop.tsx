@@ -1,5 +1,27 @@
-import { interactive } from '../../behaviors/interactive/interactive@desktop';
+import { compose } from '@typed/compose';
+import { withClassName } from '../../@bem-react/className';
 
-import { Link as LinkCommon } from './Link';
+import { withInteractive } from '../../behaviors/interactive/interactive';
+import { withDesktopInteractive, IInteractiveDesktopProps } from '../../behaviors/interactive/interactive@desktop';
 
-export const Link = interactive(LinkCommon);
+import { LinkPresenter, ILinkProps, cn } from './Link';
+
+export type ILinkDesktopProps = ILinkProps & IInteractiveDesktopProps;
+
+export class LinkDesktopPresenter extends LinkPresenter<ILinkDesktopProps> {
+    attrs() {
+        const { onMouseEnter, onMouseLeave } = this.props;
+
+        return {
+            ...super.attrs(),
+            onMouseEnter,
+            onMouseLeave,
+        };
+    }
+}
+
+export const Link = compose(
+    withClassName<ILinkDesktopProps>(cn),
+    withInteractive<ILinkDesktopProps>(),
+    withDesktopInteractive<ILinkDesktopProps>(),
+)(LinkDesktopPresenter);

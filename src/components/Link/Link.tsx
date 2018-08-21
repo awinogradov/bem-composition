@@ -1,9 +1,15 @@
 import * as React from 'react';
 import { CSSProperties } from 'react';
 
-import { block, onlyOwn, ensureProp } from '../../@bem-react/core';
+import { react } from '../../@bem-react/naming';
+import { withClassName } from '../../@bem-react/className';
+import { compose } from '@typed/compose';
 
-import { interactive, IInteractiveProps } from '../../behaviors/interactive/interactive';
+import { ensureProp } from '../../utils';
+
+import { withInteractive, IInteractiveProps } from '../../behaviors/interactive/interactive';
+
+export const cn = react.block('Link');
 
 export interface ILinkProps extends IInteractiveProps {
     url: string;
@@ -14,36 +20,51 @@ export interface ILinkProps extends IInteractiveProps {
     title?: string;
     target?: string;
     tabIndex?: number;
+    className?: string;
     style?: CSSProperties;
 }
 
-const LinkView = block<ILinkProps>('Link', props => {
-    const { bem, disabled } = props;
-    const ownProps = onlyOwn<ILinkProps>(props);
-    const { rel, url, target, text, tabIndex = 0 } = ownProps;
+export class LinkPresenter<P extends ILinkProps = ILinkProps> extends React.Component<P> {
+    attrs() {
+        const {
+            disabled, rel, url, target, tabIndex = 0, className,
+            onBlur, onFocus, onMouseDown, onMouseUp, onClick, onKeyUp, onKeyDown,
+        } = this.props;
 
-    const Tag = url ? 'a' : 'span';
-
-    let _rel = rel;
-    if (target === '_blank') {
-        if (rel && rel.indexOf('noopener') === -1) {
-            _rel = `${rel} noopener`; // Пользовательский атрибут имеет больший приоритет
+        let _rel = rel;
+        if (target === '_blank') {
+            if (rel && rel.indexOf('noopener') === -1) {
+                _rel = `${rel} noopener`; // Пользовательский атрибут имеет больший приоритет
+            }
         }
+
+        return {
+            onBlur,
+            onFocus,
+            onClick,
+            onKeyUp,
+            onMouseUp,
+            onKeyDown,
+            className,
+            rel: _rel,
+            href: url,
+            onMouseDown,
+            'aria-disabled': disabled,
+            role: ensureProp(!url, 'button'),
+            tabIndex: disabled
+                ? (url ? -1 : undefined)
+                : tabIndex,
+        };
     }
 
-    const newProps = {
-        ...ownProps,
-        rel: _rel,
-        href: url,
-        className: bem.className,
-        'aria-disabled': disabled,
-        role: ensureProp(!url, 'button'),
-        tabIndex: disabled
-            ? (url ? -1 : undefined)
-            : tabIndex,
-    };
+    render() {
+        const Tag = this.props.url ? 'a' : 'span';
 
-    return <Tag {...newProps}>{text}</Tag>;
-});
+        return <Tag {...this.attrs()}>{this.props.text}</Tag>;
+    }
+}
 
-export const Link = interactive(LinkView);
+export const Link = compose(
+    withClassName<ILinkProps>(cn),
+    withInteractive<ILinkProps>(),
+)(LinkPresenter);

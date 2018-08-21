@@ -1,12 +1,8 @@
 import * as React from 'react';
 
-import { elem } from '../../../@bem-react/core';
+import { cn } from '../App';
 
 import './App-Logo.css';
+import logo from './App-Logo.svg';
 
-export interface IAppLogoProps {
-    src: string;
-}
-
-export const Logo: React.SFC<IAppLogoProps> = elem('Logo', ({ bem, src }) =>
-    <img src={src} className={bem.className} alt="logo" />);
+export const Logo: React.SFC = () => <img src={logo} className={cn('Logo')} />;

@@ -4,7 +4,8 @@ import {
     MouseEventHandler,
 } from 'react';
 
-import { ValidComponent, ensureProp, setBem } from '../../@bem-react/core';
+import { setConditions } from '../../@bem-react/conditional';
+import { ensureProp } from '../../utils';
 
 export interface IInteractiveDesktopProps {
     onMouseEnter?: MouseEventHandler<HTMLElement>;
@@ -18,11 +19,11 @@ export interface IInteractiveDesktopState {
     hovered?: boolean;
 }
 
-export function interactive<
-    P extends IInteractiveDesktopProps,
-    S extends IInteractiveDesktopState
->(WrappedComponent: ValidComponent<P>) {
-    return (
+export function withDesktopInteractive<
+    P extends IInteractiveDesktopProps = IInteractiveDesktopProps,
+    S extends IInteractiveDesktopState = IInteractiveDesktopState
+>() {
+    return (WrappedComponent: any): React.SFC<P> => { // tslint:disable-line:no-any
         class InteractiveDesktopContainer extends React.Component<P, S> {
             constructor(props: P) {
                 super(props);
@@ -52,11 +53,9 @@ export function interactive<
                     onMouseLeave: ensureProp(!disabled, this.onMouseLeave),
                 }, this.props);
 
-                const newProps = setBem(props, {
-                    mods: {
-                        disabled,
-                        hovered: !disabled && hovered,
-                    },
+                const newProps = setConditions(props, {
+                    disabled,
+                    hovered: !disabled && hovered,
                 });
 
                 return <WrappedComponent {...newProps} />;
@@ -78,5 +77,7 @@ export function interactive<
                 }
             }
         }
-    );
+
+        return (props: any) => <InteractiveDesktopContainer {...props} />; // tslint:disable-line:no-any
+    };
 }

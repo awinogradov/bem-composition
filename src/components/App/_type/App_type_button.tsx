@@ -1,14 +1,12 @@
 import * as React from 'react';
 
-import { mod } from '../../../@bem-react/core';
+import { withCondition } from '../../../@bem-react/conditional';
 
 import { IAppProps } from '../App';
 
-export const AppTypeButton = mod<IAppProps>({ type: 'button' }, (Block, props) => {
-    const newProps = {
+export const AppTypeButton = withCondition<IAppProps>({ type: 'button' }, (App, props) => (
+    <App {...{
         ...props,
         onClick: () => console.log('!!!'), // tslint:disable-line:no-console
-    };
-
-    return <Block {...newProps} />;
-});
+    }} />
+));
