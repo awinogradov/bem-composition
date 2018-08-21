@@ -5,8 +5,6 @@ import { withClassName } from '../../@bem-react/className';
 
 import { Header } from './Header/App-Header';
 
-// import { Link } from '../Link/Link@desktop';
-
 import './App.css';
 
 export const cn = react.block('App');
