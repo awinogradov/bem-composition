@@ -1,0 +1,62 @@
+.TextArea_theme_normal {
+    position: relative;
+
+    display: inline-block;
+
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.TextArea_theme_normal .TextArea-Control {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+    color: #000;
+}
+
+.TextArea_theme_normal .TextArea-Clear_visible.TextArea-Clear_hovered {
+    opacity: 1;
+}
+
+.TextArea_disabled .TextArea-Clear_visible {
+    cursor: default;
+}
+
+.TextArea_disabled.TextArea_theme_normal .TextArea-Control {
+    color: #aaa;
+    -webkit-text-fill-color: #aaa; /* https://st.yandex-team.ru/ISL-2132 Safari needs it to blend color properly */
+}
+
+.TextArea_theme_normal .TextArea-Control::-webkit-input-placeholder {
+    color: #999;
+}
+
+.TextArea_theme_normal .TextArea-Control::-moz-placeholder {
+    color: #999;
+}
+
+.TextArea_theme_normal .TextArea-Control:-ms-input-placeholder {
+    color: #999;
+}
+
+.TextArea_theme_normal .TextArea-Box {
+    border: 1px solid rgba(0,0,0,.2);
+    background-color: #fff;
+}
+
+.TextArea_theme_normal.TextArea_hovered .TextArea-Box {
+    border-color: rgba(0,0,0,.3);
+}
+
+.TextArea_theme_normal.TextArea_focused {
+    border: 0;
+}
+
+.TextArea_theme_normal.TextArea_focused .TextArea-Box,
+.TextArea_theme_normal.TextArea_focused.TextArea_hovered .TextArea-Box {
+    border: 2px solid #ffdb4d;
+}
+
+.TextArea_theme_normal.TextArea_disabled .TextArea-Box {
+    border-color: transparent;
+    background-color: rgba(0,0,0,.08);
+}

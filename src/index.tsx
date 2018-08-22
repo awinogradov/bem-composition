@@ -12,4 +12,4 @@ import './index.css';
 
 const AppWithMods = compose(AppThemeNormal, AppTypeButton, AppThemeIslands)(App);
 
-ReactDOM.render(<AppWithMods theme="islands" type="button" />, document.getElementById('root'));
+ReactDOM.render(<AppWithMods />, document.getElementById('root'));

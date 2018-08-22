@@ -1,0 +1,19 @@
+.TextArea_size_m {
+    min-width: 200px;
+    min-height: 32px;
+}
+
+.TextArea_size_m .TextArea-Control {
+    padding: 8px 10px;
+
+    font-size: 15px;
+}
+
+.TextArea_size_m.TextArea_hasClear .TextArea-Control {
+    padding-right: 25%; /* Подобрано на глаз */
+}
+
+.TextArea_size_m .TextArea-Clear {
+    width: 32px;
+    height: 32px;
+}

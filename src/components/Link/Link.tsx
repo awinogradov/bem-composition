@@ -1,15 +1,14 @@
 import * as React from 'react';
 import { CSSProperties } from 'react';
 
-import { bem } from '../../@bem-react/naming/react';
-import { withClassName } from '../../@bem-react/className';
+import { block, withClassName } from '../../@bem-react/naming/react';
 import { compose } from '@typed/compose';
 
 import { ensureProp } from '../../utils';
 
 import { withInteractive, IInteractiveProps } from '../../behaviors/interactive/interactive';
 
-export const { block } = bem('Link');
+export const bl = block('Link');
 
 export interface ILinkProps extends IInteractiveProps {
     url: string;
@@ -65,6 +64,6 @@ export class LinkPresenter<P extends ILinkProps = ILinkProps> extends React.Comp
 }
 
 export const Link = compose(
-    withClassName<ILinkProps>(block),
+    withClassName<ILinkProps>(bl),
     withInteractive<ILinkProps>(),
 )(LinkPresenter);

@@ -1,8 +1,10 @@
 import * as React from 'react';
 
-import { elem } from '../App';
+import { elem } from '../../../@bem-react/naming/react';
 
 import './App-Logo.css';
 import logo from './App-Logo.svg';
 
-export const Logo: React.SFC = () => <img src={logo} className={elem('Logo')} />;
+const el = elem('App', 'Logo');
+
+export const Logo: React.SFC = () => <img src={logo} className={el()} />;

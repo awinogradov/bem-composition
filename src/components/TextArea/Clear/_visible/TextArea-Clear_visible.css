@@ -1,0 +1,11 @@
+.TextArea-Clear_visible {
+    visibility: visible;
+
+    opacity: .3;
+}
+
+.TextArea_disabled .Textarea-Clear_visible {
+    z-index: 0; /* Понижаем под __control и __box */
+
+    opacity: .1;
+}

@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { AllHTMLAttributes } from 'react';
 
-import { bem, classnames } from '../../@bem-react/naming/react';
-import { withClassName } from '../../@bem-react/className';
+import { block, classnames, withClassName } from '../../@bem-react/naming/react';
 
 import './Icon.css';
 
-export const { block, mods } = bem('Icon');
+const bl = block('Icon');
 
 export type IconSize = 'ns' | 'xs' | 's' | 'm' | 'n' | 'l' | 'head';
 export type IconDirection = 'left' | 'top' | 'right' | 'bottom';
@@ -35,11 +34,11 @@ export const IconPresenter: React.SFC<IIconProps> = props => {
     const attrs = {
         id,
         alt,
-        className: classnames(className, mods({ direction, size }), mix),
+        className: classnames(className, bl({ direction, size }), mix),
         ...dangerouslySetAttrs,
     };
 
     return <span {...attrs} />;
 };
 
-export const Icon = withClassName(block)(IconPresenter);
+export const Icon = withClassName(bl)(IconPresenter);

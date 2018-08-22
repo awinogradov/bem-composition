@@ -1,8 +1,10 @@
 import * as React from 'react';
 
-import { elem } from '../App';
+import { elem } from '../../../@bem-react/naming/react';
 
 import './App-Title.css';
+
+const el = elem('App', 'Title');
 
 interface IAppTitleProps {
     text: string;
@@ -10,6 +12,6 @@ interface IAppTitleProps {
 
 export class Title extends React.Component<IAppTitleProps> {
     render() {
-        return <h1 className={elem('Title')}>{this.props.text}</h1>;
+        return <h1 className={el()}>{this.props.text}</h1>;
     }
 }

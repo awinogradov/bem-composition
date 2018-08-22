@@ -1,0 +1,12 @@
+.TextArea-Clear {
+    position: absolute;
+    z-index: 3; /* рисуем поверх __box и __control */
+    top: 0;
+    right: 0;
+
+    visibility: hidden;
+
+    cursor: pointer;
+
+    opacity: 0;
+}

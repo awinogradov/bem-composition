@@ -1,0 +1,52 @@
+.TextArea-Control {
+    position: relative;
+    z-index: 2; /* рисуем поверх __box, чтобы сверху класть иконки */
+
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+
+    resize: none;
+    vertical-align: top;
+
+    font-size: 100%;
+
+    border: 2px solid transparent;
+    outline: 0;
+    background: none;
+}
+
+.TextArea_disabled .TextArea-Control {
+    z-index: 3;
+
+    cursor: default;
+    user-select: none;
+}
+
+/* Лишние отступы у текста */
+.TextArea-Control::-webkit-search-decoration {
+    appearance: none;
+}
+
+/* Нативный крестик */
+.TextArea-Control::-webkit-search-cancel-button {
+    display: none;
+}
+
+.TextArea-Control::-ms-clear {
+    display: none;
+}
+
+/* Сбрасываем желтый background у инпутов при автозаполнении */
+.TextArea-Control:-webkit-autofill {
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    background-clip: content-box;
+    box-shadow: inset 0 0 0 50px #fff;
+    -webkit-text-fill-color: #000;
+}
+
+.TextArea-Control::-moz-placeholder {
+    opacity: 1; /*В firefox полупрозрачный по умолчанию*/
+}
