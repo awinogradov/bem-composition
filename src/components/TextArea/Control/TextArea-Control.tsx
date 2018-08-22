@@ -1,10 +1,7 @@
 import * as React from 'react';
 import { TextareaHTMLAttributes } from 'react';
 
-import { elem } from '../../../@bem-react/naming/react';
-
-const el = elem('TextArea', 'Control');
-
+import { textArea } from '../TextArea.entity';
 import './TextArea-Control.css';
 
 export interface ITextAreaControlProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -39,7 +36,7 @@ export const Control = React.forwardRef((props: ITextAreaControlProps, ref) => {
         disabled,
         placeholder,
         autoComplete,
-        className: el(),
+        className: textArea.control(),
         ref: ref as React.RefObject<HTMLTextAreaElement>,
     };
 

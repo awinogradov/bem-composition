@@ -4,7 +4,8 @@ import { withClassName } from '../../@bem-react/naming/react';
 import { withInteractive } from '../../behaviors/interactive/interactive';
 import { withDesktopInteractive, IInteractiveDesktopProps } from '../../behaviors/interactive/interactive@desktop';
 
-import { LinkPresenter, ILinkProps, bl } from './Link';
+import { LinkPresenter, ILinkProps} from './Link';
+import { link } from './Link.entity';
 
 export type ILinkDesktopProps = ILinkProps & IInteractiveDesktopProps;
 
@@ -21,7 +22,7 @@ export class LinkDesktopPresenter extends LinkPresenter<ILinkDesktopProps> {
 }
 
 export const Link = compose(
-    withClassName<ILinkDesktopProps>(bl),
+    withClassName<ILinkDesktopProps>(link),
     withInteractive<ILinkDesktopProps>(),
     withDesktopInteractive<ILinkDesktopProps>(),
 )(LinkDesktopPresenter);

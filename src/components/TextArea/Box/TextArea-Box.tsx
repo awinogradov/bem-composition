@@ -1,9 +1,7 @@
 import * as React from 'react';
 
-import { elem } from '../../../@bem-react/naming/react';
+import { textArea } from '../TextArea.entity';
 
 import './TextArea-Box.css';
 
-const el = elem('TextArea', 'Box');
-
-export const Box = () => <span className={el()}/>;
+export const Box = () => <span className={textArea.box()}/>;

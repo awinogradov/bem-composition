@@ -7,15 +7,15 @@ import {
 } from 'react';
 import { compose } from '@typed/compose';
 
-import { block, withClassName } from '../../@bem-react/naming/react';
+import { withClassName } from '../../@bem-react/naming/react';
+import { withRegistry, RegistryConsumer } from '../../@bem-react/di';
+import { textAreaRegistry } from './TextArea.registry';
 
 import { ensureProp } from '../../utils';
 import { withInteractive, IInteractiveProps } from '../../behaviors/interactive/interactive';
-import { Box } from './Box/TextArea-Box';
 import { Wrap } from './Wrap/TextArea-Wrap';
 import { Control } from './Control/TextArea-Control';
-
-const bl = block('TextArea');
+import { textArea } from './TextArea.entity';
 
 export type TextareaChangeEventHandler = (value: string, props: ITextAreaProps, options?: { source?: string }) => void;
 
@@ -86,13 +86,23 @@ export class TextAreaPresenter<P extends ITextAreaProps = ITextAreaProps> extend
         };
 
         return (
-            <span className={className} {...dangerouslySetAttrs}>
-                <Wrap>
-                    <Control {...controlAttrs} />
-                </Wrap>
-                <Box/>
-                {controls}
-            </span>
+            <RegistryConsumer>
+                {registies => {
+                    const registry = registies[textArea()];
+
+                    const Box = registry.get(textArea.box());
+
+                    return (
+                        <span className={className} {...dangerouslySetAttrs}>
+                            <Wrap>
+                                <Control {...controlAttrs} />
+                            </Wrap>
+                            <Box/>
+                            {controls}
+                        </span>
+                    );
+                }}
+            </RegistryConsumer>
         );
     }
 
@@ -106,6 +116,7 @@ export class TextAreaPresenter<P extends ITextAreaProps = ITextAreaProps> extend
 }
 
 export const TextArea = compose(
-    withClassName<ITextAreaProps>(bl),
+    withRegistry<ITextAreaProps>(textAreaRegistry),
+    withClassName<ITextAreaProps>(textArea),
     withInteractive<ITextAreaProps>(),
 )(TextAreaPresenter);

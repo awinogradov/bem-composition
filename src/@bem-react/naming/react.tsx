@@ -2,34 +2,48 @@ import { B } from 'b_';
 
 export type NoStrictMods = Record<string, string | boolean | number | undefined>;
 
-const bem = B({
-    elementSeparator: '-',
-    modSeparator: '_',
-    modValueSeparator: '_',
-});
+// interface IBlockFormatter {
+//     (mods?: NoStrictMods): string;
+//     (elem: string, mods?: NoStrictMods): string;
+// }
 
-export const block = (b: string) => bem.with(b);
+type ElemFormatter = (mods?: NoStrictMods) => string;
 
-export const elem = (b: string, e: string) => (elemMods?: NoStrictMods) => block(b)(e, elemMods);
+// const bem = B({
+//     elementSeparator: '-',
+//     modSeparator: '_',
+//     modValueSeparator: '_',
+// });
 
-// export const bem = (b: string) => {
-//     const block = B({
-//         elementSeparator: '-',
-//         modSeparator: '_',
-//         modValueSeparator: '_',
-//     }).with(b);
+interface IEntity {
+    (mods?: NoStrictMods): string;
+    [key: string]: ElemFormatter;
+}
 
-//     return {
-//         block,
-//         elem(e: string) {
-//             return function(elemMods?: NoStrictMods) {
-//                 return block(e, elemMods);
-//             };
-//         },
-//         mods(mods: NoStrictMods) {
-//             return block(mods);
-//         },
-//     };
-// };
+// @ts-ignore
+// export const block = (b: string): IEntity => bem.with(b);
+
+// export const elem = (b: string, e: string) => bem.with(b, e);
+
+export const bem = (b: string) => {
+    const bl = B({
+        elementSeparator: '-',
+        modSeparator: '_',
+        modValueSeparator: '_',
+    }).with(b);
+
+    // @ts-ignore
+    const block: IEntity = (mods?: NoStrictMods) => {
+        return bl(mods);
+    };
+
+    const elem = (e: string) => {
+        return function(elemMods?: NoStrictMods) {
+            return bl(e, elemMods);
+        };
+    };
+
+    return { block, elem };
+};
 
 export * from '.';
