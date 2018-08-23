@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { compose } from '@typed/compose';
 
-import { classnames, withClassName } from '../../../@bem-react/naming/react';
+import { classnames, withClassName, withClassMix } from '../../../@bem-react/naming/react';
 
 import { Icon } from '../../Icon/Icon';
 import { IconTypeCross } from '../../Icon/_type/Icon_type_cross';
@@ -30,13 +30,9 @@ export class ClearPresenter<P extends ITextAreaClearProps = ITextAreaClearProps>
     render() {
         const { size, className, theme } = this.props;
 
-        const iconProps = {
-            size,
-            dangerouslySetAttrs: this.attrs(),
-            mix: classnames(className, textArea.clear({ theme })),
-        };
+        const IconWithMix = withClassMix(IconWithMods, classnames(className, textArea.clear({ theme })));
 
-        return <IconWithMods type="cross" {...iconProps} />;
+        return <IconWithMix type="cross" size={size} dangerouslySetAttrs={this.attrs()} />;
     }
 }
 

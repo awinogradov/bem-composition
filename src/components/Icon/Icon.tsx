@@ -17,13 +17,12 @@ export interface IIconProps {
     id?: string;
     url?: string;
     alt?: string;
-    mix?: string;
     className?: string;
     dangerouslySetAttrs?: AllHTMLAttributes<IIconProps>;
 }
 
 export const IconPresenter: React.SFC<IIconProps> = props => {
-    const { url, id, alt, dangerouslySetAttrs = {}, direction, size, className, mix } = props;
+    const { url, id, alt, dangerouslySetAttrs = {}, direction, size, className } = props;
 
     if (url !== undefined) {
         dangerouslySetAttrs.style = dangerouslySetAttrs.style || {};
@@ -33,7 +32,7 @@ export const IconPresenter: React.SFC<IIconProps> = props => {
     const attrs = {
         id,
         alt,
-        className: classnames(className, icon({ direction, size }), mix),
+        className: classnames(className, icon({ direction, size })),
         ...dangerouslySetAttrs,
     };
 

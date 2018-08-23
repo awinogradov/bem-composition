@@ -20,7 +20,7 @@ textAreaOverrides.add(textArea.box(), () => <section/>);
 textAreaOverrides2.add(textArea.box(), () => <abbr/>);
 
 const TextAreaWithMods: React.SFC<ITextAreaProps> = compose(
-    withRegistry<ITextAreaProps>(textAreaOverrides), // это важнее чем в App, но перетирает тот что в TextArea
+    // withRegistry<ITextAreaProps>(textAreaOverrides), // это важнее чем в App, но перетирает тот что в TextArea
     TextAreaThemeNormal,
     TextAreaSizeM,
     TextAreaHasClear,
@@ -60,6 +60,6 @@ const AppPresenter: React.SFC<IAppProps> = ({ className, onClick }) => (
 );
 
 export const App = compose(
-    withRegistry(appRegistry, textAreaOverrides2),
+    withRegistry(appRegistry),
     withClassName(app),
 )(AppPresenter);
