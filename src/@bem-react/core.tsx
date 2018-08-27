@@ -41,23 +41,23 @@ export function withBemMod<P extends IClassNameProps>(
     cb?: ModBody<P>,
 ) {
     return function(Block: React.SFC<P>) {
-        const Modifier: React.SFC<P> = function(props: P) {
+        const BemMod: React.SFC<P> = function(props: P) {
             if (matchSubset(props, mod)) {
                 const newProps = Object.assign({}, props, {
                     className: classnames(props.className, entity.mods(mod)),
                 });
 
-                Modifier.displayName = `Modifier(${JSON.stringify(mod)}, true)`;
+                BemMod.displayName = `BemMod(${JSON.stringify(mod)}, true)`;
 
                 return cb ? cb(Block, newProps) : <Block {...newProps} />;
             }
 
-            Modifier.displayName = `Modifier(${JSON.stringify(mod)})`;
+            BemMod.displayName = `BemMod(${JSON.stringify(mod)})`;
 
             return <Block {...props}/>;
         };
 
-        return Modifier;
+        return BemMod;
     };
 }
 
@@ -73,7 +73,7 @@ export function withBemClassMix<P extends IClassNameProps>(
         return <Origin {...newProps} />;
     };
 
-    BemClassMix.displayName = `ClassMix(${mix})`;
+    BemClassMix.displayName = `BemClassMix(${mix})`;
 
     return BemClassMix;
 }
