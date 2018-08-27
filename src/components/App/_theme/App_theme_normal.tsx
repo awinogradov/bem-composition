@@ -1,5 +1,5 @@
-import { withCondition } from '../../../@bem-react/conditional';
+import { withBemMod } from '../../../@bem-react/core';
 
-import { IAppProps } from '../App';
+import { IAppProps, app } from '../App';
 
-export const AppThemeNormal = withCondition<IAppProps>({ theme: 'normal' });
+export const AppThemeNormal = withBemMod<IAppProps>(app, { theme: 'normal' });

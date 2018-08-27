@@ -4,7 +4,6 @@ import {
     MouseEventHandler,
 } from 'react';
 
-import { setConditions } from '../../@bem-react/conditional';
 import { ensureProp } from '../../utils';
 
 export interface IInteractiveDesktopProps {
@@ -19,13 +18,10 @@ export interface IInteractiveDesktopState {
     hovered?: boolean;
 }
 
-export function withDesktopInteractive<
-    P extends IInteractiveDesktopProps = IInteractiveDesktopProps,
-    S extends IInteractiveDesktopState = IInteractiveDesktopState
->() {
-    return (WrappedComponent: any): React.SFC<P> => { // tslint:disable-line:no-any
-        class InteractiveDesktopContainer extends React.Component<P, S> {
-            constructor(props: P) {
+export function withDesktopInteractive<P extends IInteractiveDesktopProps>() {
+    return (WrappedComponent: any): React.SFC<P> => {
+        class InteractiveDesktop extends React.Component<IInteractiveDesktopProps, IInteractiveDesktopState> {
+            constructor(props: IInteractiveDesktopProps) {
                 super(props);
 
                 const { disabled } = this.props;
@@ -33,7 +29,7 @@ export function withDesktopInteractive<
                 this.state = {
                     disabled,
                     hovered: this.props.hovered,
-                } as S;
+                };
 
                 this.onMouseEnter = this.onMouseEnter.bind(this);
                 this.onMouseLeave = this.onMouseLeave.bind(this);
@@ -48,15 +44,12 @@ export function withDesktopInteractive<
             render() {
                 const { disabled, hovered } = this.state;
 
-                const props = Object.assign({}, {
+                const newProps = Object.assign({}, {
+                    disabled,
+                    hovered: !disabled && hovered,
                     onMouseEnter: ensureProp(!disabled, this.onMouseEnter),
                     onMouseLeave: ensureProp(!disabled, this.onMouseLeave),
                 }, this.props);
-
-                const newProps = setConditions(props, {
-                    disabled,
-                    hovered: !disabled && hovered,
-                });
 
                 return <WrappedComponent {...newProps} />;
             }
@@ -78,6 +71,8 @@ export function withDesktopInteractive<
             }
         }
 
-        return (props: any) => <InteractiveDesktopContainer {...props} />; // tslint:disable-line:no-any
+        const InteractiveDesktopContainer = (props: P) => <InteractiveDesktop {...props} />;
+
+        return InteractiveDesktopContainer;
     };
 }

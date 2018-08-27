@@ -1,14 +1,16 @@
 import * as React from 'react';
+import { entity } from '../../../@bem-react/entity';
 
-import { app } from '../App.entity';
 import './App-Title.css';
 
-interface IAppTitleProps {
+export const appTitle = entity('App', 'Title');
+
+export interface IAppTitleProps {
     text: string;
 }
 
 export class Title extends React.Component<IAppTitleProps> {
     render() {
-        return <h1 className={app.title()}>{this.props.text}</h1>;
+        return <h1 className={String(appTitle)}>{this.props.text}</h1>;
     }
 }

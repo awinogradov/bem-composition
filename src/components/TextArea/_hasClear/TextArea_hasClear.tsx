@@ -2,12 +2,17 @@ import * as React from 'react';
 import { MouseEventHandler, MouseEvent } from 'react';
 import { compose } from '@typed/compose';
 
-import { withCondition } from '../../../@bem-react/conditional';
+import { withBemMod } from '../../../@bem-react/core';
 
 import { Clear } from '../Clear/TextArea-Clear';
+import { TextAreaClearVisible } from '../Clear/_visible/TextArea-Clear_visible';
 import { ITextAreaProps } from '../TextArea';
 
 import './TextArea_hasClear.css';
+
+import { textArea } from '../TextArea';
+
+const ClearWithMods = compose(TextAreaClearVisible)(Clear);
 
 export interface ITextAreaHasClearProps extends ITextAreaProps {
     onClearClick?: MouseEventHandler;
@@ -15,7 +20,7 @@ export interface ITextAreaHasClearProps extends ITextAreaProps {
 
 function withClear() {
     return (WrappedComponent: React.SFC<ITextAreaProps>) => {
-        class ClearableContainer extends React.Component<ITextAreaHasClearProps> {
+        class Clearable extends React.Component<ITextAreaHasClearProps> {
             protected domElem = React.createRef<HTMLTextAreaElement>();
 
             constructor(props: ITextAreaHasClearProps) {
@@ -27,7 +32,7 @@ function withClear() {
             render() {
                 const { size, text } = this.props;
                 const clearElement = (
-                    <Clear
+                    <ClearWithMods
                         size={size}
                         visible={Boolean(text)}
                         onClick={this.onClearClick} />
@@ -57,11 +62,13 @@ function withClear() {
             }
         }
 
-        return (props: ITextAreaHasClearProps) => <ClearableContainer {...props} />;
+        const ClearableContainer = (props: ITextAreaHasClearProps) => <Clearable {...props} />;
+
+        return ClearableContainer;
     };
 }
 
-export const TextAreaHasClear = withCondition<ITextAreaProps>({ hasClear: true }, (TextArea, props) => {
+export const TextAreaHasClear = withBemMod<ITextAreaProps>(textArea, { hasClear: true }, (TextArea, props) => {
     const TextAreaWithClear = compose(withClear())(TextArea);
 
     return <TextAreaWithClear {...props} />;

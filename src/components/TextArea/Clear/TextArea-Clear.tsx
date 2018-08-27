@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { compose } from '@typed/compose';
 
-import { classnames, withClassName, withClassMix } from '../../../@bem-react/naming/react';
+import { entity } from '../../../@bem-react/entity';
+import { withBemClassName, withBemClassMix } from '../../../@bem-react/core';
 
 import { Icon } from '../../Icon/Icon';
 import { IconTypeCross } from '../../Icon/_type/Icon_type_cross';
 import { withInteractive, IInteractiveProps } from '../../../behaviors/interactive/interactive';
 
-import { textArea } from '../TextArea.entity';
 import './TextArea-Clear.css';
-import { TextAreaClearVisible } from './_visible/TextArea-Clear_visible';
+
+export const textAreaClear = entity('TextArea', 'Clear');
 
 const IconWithMods = compose(IconTypeCross)(Icon);
 
@@ -20,6 +21,8 @@ export interface ITextAreaClearProps extends IInteractiveProps {
     className?: string;
 }
 
+const mapPropsToBemMods = ({ theme }: ITextAreaClearProps) => ({ theme });
+
 export class ClearPresenter<P extends ITextAreaClearProps = ITextAreaClearProps> extends React.Component<P> {
     attrs() {
         const { onBlur, onFocus, onMouseDown, onMouseUp, onClick, onKeyUp, onKeyDown } = this.props;
@@ -28,16 +31,15 @@ export class ClearPresenter<P extends ITextAreaClearProps = ITextAreaClearProps>
     }
 
     render() {
-        const { size, className, theme } = this.props;
+        const { size, className } = this.props;
 
-        const IconWithMix = withClassMix(IconWithMods, classnames(className, textArea.clear({ theme })));
+        const IconWithMix = withBemClassMix(IconWithMods, className);
 
         return <IconWithMix type="cross" size={size} dangerouslySetAttrs={this.attrs()} />;
     }
 }
 
 export const Clear = compose(
-    TextAreaClearVisible,
-    withClassName(textArea.clear),
     withInteractive<ITextAreaClearProps>(),
+    withBemClassName(textAreaClear, mapPropsToBemMods),
 )(ClearPresenter);

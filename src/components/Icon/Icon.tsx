@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { AllHTMLAttributes } from 'react';
 
-import { classnames, withClassName } from '../../@bem-react/naming/react';
+import { withBemClassName } from '../../@bem-react/core';
+import { entity } from '../../@bem-react/entity';
 
-import { icon } from './Icon.entity';
 import './Icon.css';
+
+export const icon =  entity('Icon');
 
 export type IconSize = 'ns' | 'xs' | 's' | 'm' | 'n' | 'l' | 'head';
 export type IconDirection = 'left' | 'top' | 'right' | 'bottom';
@@ -21,8 +23,10 @@ export interface IIconProps {
     dangerouslySetAttrs?: AllHTMLAttributes<IIconProps>;
 }
 
+const mapPropsToBemMods = ({ direction, size }: IIconProps) => ({ direction, size });
+
 export const IconPresenter: React.SFC<IIconProps> = props => {
-    const { url, id, alt, dangerouslySetAttrs = {}, direction, size, className } = props;
+    const { url, id, alt, dangerouslySetAttrs = {}, className } = props;
 
     if (url !== undefined) {
         dangerouslySetAttrs.style = dangerouslySetAttrs.style || {};
@@ -32,11 +36,11 @@ export const IconPresenter: React.SFC<IIconProps> = props => {
     const attrs = {
         id,
         alt,
-        className: classnames(className, icon({ direction, size })),
+        className,
         ...dangerouslySetAttrs,
     };
 
     return <span {...attrs} />;
 };
 
-export const Icon = withClassName(icon)(IconPresenter);
+export const Icon = withBemClassName(icon, mapPropsToBemMods)(IconPresenter);

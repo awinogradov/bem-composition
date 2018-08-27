@@ -1,23 +1,26 @@
 import * as React from 'react';
 import { compose } from '@typed/compose';
 
-import { withClassName } from '../../@bem-react/naming/react';
+import { withBemClassName } from '../../@bem-react/core';
+import { entity } from '../../@bem-react/entity';
 import { withRegistry, Registry, RegistryConsumer } from '../../@bem-react/di';
 
-import { textArea } from '../TextArea/TextArea.entity';
-import { TextArea as Ta, ITextAreaProps } from '../TextArea/TextArea';
+import { textAreaBox } from '../TextArea/Box/TextArea-Box';
+import { textArea, TextArea as Ta, ITextAreaProps } from '../TextArea/TextArea';
 import { TextAreaThemeNormal } from '../TextArea/_theme/TextArea_theme_normal';
 import { TextAreaSizeM } from '../TextArea/_size/TextArea_size_m';
 import { TextAreaHasClear } from '../TextArea/_hasClear/TextArea_hasClear';
 
-import { app } from './App.entity';
 import { Header } from './Header/App-Header';
 
-const textAreaOverrides = new Registry({ id: textArea() });
-const textAreaOverrides2 = new Registry({ id: textArea() });
+export const app = entity('App');
+export const appIntro = entity('App', 'Intro');
 
-textAreaOverrides.add(textArea.box(), () => <section/>);
-textAreaOverrides2.add(textArea.box(), () => <abbr/>);
+const textAreaOverrides = new Registry({ id: String(textArea) });
+const textAreaOverrides2 = new Registry({ id: String(textArea) });
+
+textAreaOverrides.add(String(textAreaBox), () => <section/>);
+textAreaOverrides2.add(String(textAreaBox), () => <abbr/>);
 
 const TextAreaWithMods: React.SFC<ITextAreaProps> = compose(
     // withRegistry<ITextAreaProps>(textAreaOverrides), // это важнее чем в App, но перетирает тот что в TextArea
@@ -28,9 +31,10 @@ const TextAreaWithMods: React.SFC<ITextAreaProps> = compose(
 
 import './App.css';
 
-const appRegistry = new Registry({ id: app() });
 
-appRegistry.add(textArea(), TextAreaWithMods);
+const appRegistry = new Registry({ id: String(app) });
+
+appRegistry.add(String(textArea), TextAreaWithMods);
 
 export interface IAppProps {
     onClick?: React.MouseEventHandler<HTMLDivElement>;
@@ -42,14 +46,14 @@ export interface IAppProps {
 const AppPresenter: React.SFC<IAppProps> = ({ className, onClick }) => (
     <RegistryConsumer>
         {registries => {
-            const registry = registries[app()];
+            const registry = registries[String(app)];
 
-            const TextArea = registry.get<ITextAreaProps>(textArea());
+            const TextArea = registry.get<ITextAreaProps>(String(textArea));
 
             return (
                 <div className={className} onClick={onClick}>
                     <Header title="Welcome to React" />
-                    <p className={app.intro({ theme: 'shit' })}>
+                    <p className={appIntro.mods({ theme: 'shit' })}>
                         To get started, edit <code>src/App.js</code> and save to reload.
                     </p>
                     <TextArea theme="normal" size="m" hasClear text="wow!" />
@@ -61,5 +65,5 @@ const AppPresenter: React.SFC<IAppProps> = ({ className, onClick }) => (
 
 export const App = compose(
     withRegistry(appRegistry),
-    withClassName(app),
+    withBemClassName(app),
 )(AppPresenter);

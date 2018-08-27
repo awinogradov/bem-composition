@@ -8,7 +8,6 @@ import {
     KeyboardEventHandler,
 } from 'react';
 
-import { setConditions } from '../../@bem-react/conditional';
 import { ensureProp } from '../../utils';
 
 export interface IInteractiveProps {
@@ -30,13 +29,10 @@ export interface IInteractiveState {
     pressed?: boolean;
 }
 
-export function withInteractive<
-    P extends IInteractiveProps = IInteractiveProps,
-    S extends IInteractiveState = IInteractiveState
->() {
-    return (WrappedComponent: any): React.SFC<P> => { // tslint:disable-line:no-any
-        class InteractiveContainer extends React.Component<P, S> {
-            constructor(props: P) {
+export function withInteractive<P extends IInteractiveProps>() {
+    return (WrappedComponent: any): React.SFC<P> => {
+        class Interactive extends React.Component<IInteractiveProps, IInteractiveState> {
+            constructor(props: IInteractiveProps) {
                 super(props);
 
                 const { disabled, focused, pressed } = this.props;
@@ -45,7 +41,7 @@ export function withInteractive<
                     disabled,
                     focused,
                     pressed,
-                } as S;
+                };
 
                 this.onFocus = this.onFocus.bind(this);
                 this.onBlur = this.onBlur.bind(this);
@@ -66,7 +62,10 @@ export function withInteractive<
             render() {
                 const { pressed, disabled, focused } = this.state;
 
-                const props = Object.assign({}, {
+                const newProps = Object.assign({}, {
+                    disabled,
+                    focused: !disabled && focused,
+                    pressed: !disabled && pressed,
                     onFocus: ensureProp(!disabled, this.onFocus),
                     onBlur: ensureProp(!disabled, this.onBlur),
                     onMouseDown: ensureProp(!disabled, this.onMouseDown),
@@ -75,12 +74,6 @@ export function withInteractive<
                     onKeyDown: ensureProp(!disabled, this.onKeyDown),
                     onClick: ensureProp(!disabled, this.onClick),
                 }, this.props);
-
-                const newProps = setConditions(props, {
-                    disabled,
-                    focused: !disabled && focused,
-                    pressed: !disabled && pressed,
-                });
 
                 return <WrappedComponent {...newProps} />;
             }
@@ -158,6 +151,8 @@ export function withInteractive<
             }
         }
 
-        return (props: any) => <InteractiveContainer {...props} />; // tslint:disable-line:no-any
+        const InteractiveContainer = (props: P) => <Interactive {...props} />;
+
+        return InteractiveContainer;
     };
 }

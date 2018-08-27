@@ -8,7 +8,7 @@ export const RegistryConsumer = registryContext.Consumer;
 
 export function withRegistry<P>(...registries: Registry[]) {
     return function(Component: ValidComponent<P>) {
-        return (props: P) => {
+        const RegistryResolver: React.SFC<P> = (props: P) => {
             return (
                 <RegistryConsumer>
                     {contextRegistries => {
@@ -31,6 +31,10 @@ export function withRegistry<P>(...registries: Registry[]) {
                 </RegistryConsumer>
             );
         };
+
+        RegistryResolver.displayName = `RegistryResolver(${registries.map(r => r.id).join(', ')})`;
+
+        return RegistryResolver;
     };
 }
 
@@ -58,7 +62,7 @@ export class Registry {
         this.components.set(id, component);
     }
 
-    get<P>(id: string): ValidComponent<P> {
+    get<P>(id?: string): ValidComponent<P> {
         const component = this.components.get(id);
         if (!component) {
             throw new Error(`Component with id '${id}' not found.`);

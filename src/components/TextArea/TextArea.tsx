@@ -7,15 +7,20 @@ import {
 } from 'react';
 import { compose } from '@typed/compose';
 
-import { withClassName } from '../../@bem-react/naming/react';
-import { withRegistry, RegistryConsumer } from '../../@bem-react/di';
-import { textAreaRegistry } from './TextArea.registry';
+import { withBemClassName } from '../../@bem-react/core';
+import { entity } from '../../@bem-react/entity';
+import { withRegistry, RegistryConsumer, Registry } from '../../@bem-react/di';
 
 import { ensureProp } from '../../utils';
 import { withInteractive, IInteractiveProps } from '../../behaviors/interactive/interactive';
+import { textAreaBox, Box } from './Box/TextArea-Box';
 import { Wrap } from './Wrap/TextArea-Wrap';
 import { Control } from './Control/TextArea-Control';
-import { textArea } from './TextArea.entity';
+
+export const textArea = entity('TextArea');
+export const textAreaRegistry = new Registry({ id: String(textArea), inverted: true });
+
+textAreaRegistry.add(String(textAreaBox), Box);
 
 export type TextareaChangeEventHandler = (value: string, props: ITextAreaProps, options?: { source?: string }) => void;
 
@@ -87,17 +92,16 @@ export class TextAreaPresenter<P extends ITextAreaProps = ITextAreaProps> extend
 
         return (
             <RegistryConsumer>
-                {registies => {
-                    const registry = registies[textArea()];
-
-                    const Box = registry.get(textArea.box());
+                {registries => {
+                    const registry = registries[String(textArea)];
+                    const TextAreaBox = registry.get(String(textAreaBox));
 
                     return (
                         <span className={className} {...dangerouslySetAttrs}>
                             <Wrap>
                                 <Control {...controlAttrs} />
                             </Wrap>
-                            <Box/>
+                            <TextAreaBox/>
                             {controls}
                         </span>
                     );
@@ -116,7 +120,7 @@ export class TextAreaPresenter<P extends ITextAreaProps = ITextAreaProps> extend
 }
 
 export const TextArea = compose(
-    withRegistry<ITextAreaProps>(textAreaRegistry),
-    withClassName<ITextAreaProps>(textArea),
+    withBemClassName(textArea),
     withInteractive<ITextAreaProps>(),
+    withRegistry<ITextAreaProps>(textAreaRegistry),
 )(TextAreaPresenter);

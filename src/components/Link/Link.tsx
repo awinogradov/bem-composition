@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { CSSProperties } from 'react';
 
-import { withClassName } from '../../@bem-react/naming/react';
+import { withBemClassName } from '../../@bem-react/core';
+import { entity } from '../../@bem-react/entity';
 import { compose } from '@typed/compose';
 
 import { ensureProp } from '../../utils';
 
 import { withInteractive, IInteractiveProps } from '../../behaviors/interactive/interactive';
 
-import { link } from './Link.entity';
+export const link = entity('Link');
 
 export interface ILinkProps extends IInteractiveProps {
     url: string;
@@ -23,6 +24,7 @@ export interface ILinkProps extends IInteractiveProps {
     style?: CSSProperties;
 }
 
+const mapPropsToBemMods = ({ focused, pressed, disabled }: ILinkProps) => ({ focused, pressed, disabled });
 export class LinkPresenter<P extends ILinkProps = ILinkProps> extends React.Component<P> {
     attrs() {
         const {
@@ -64,6 +66,6 @@ export class LinkPresenter<P extends ILinkProps = ILinkProps> extends React.Comp
 }
 
 export const Link = compose(
-    withClassName<ILinkProps>(link),
     withInteractive<ILinkProps>(),
+    withBemClassName(link, mapPropsToBemMods),
 )(LinkPresenter);

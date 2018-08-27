@@ -1,13 +1,15 @@
 import { compose } from '@typed/compose';
-import { withClassName } from '../../@bem-react/naming/react';
+import { withBemClassName } from '../../@bem-react/core';
 
 import { withInteractive } from '../../behaviors/interactive/interactive';
 import { withDesktopInteractive, IInteractiveDesktopProps } from '../../behaviors/interactive/interactive@desktop';
 
 import { LinkPresenter, ILinkProps} from './Link';
-import { link } from './Link.entity';
+import { link } from './Link';
 
 export type ILinkDesktopProps = ILinkProps & IInteractiveDesktopProps;
+
+const mapPropsToBemMods = ({ focused, pressed, disabled, hovered }: ILinkDesktopProps) => ({ focused, pressed, disabled, hovered });
 
 export class LinkDesktopPresenter extends LinkPresenter<ILinkDesktopProps> {
     attrs() {
@@ -22,7 +24,7 @@ export class LinkDesktopPresenter extends LinkPresenter<ILinkDesktopProps> {
 }
 
 export const Link = compose(
-    withClassName<ILinkDesktopProps>(link),
     withInteractive<ILinkDesktopProps>(),
     withDesktopInteractive<ILinkDesktopProps>(),
+    withBemClassName(link, mapPropsToBemMods),
 )(LinkDesktopPresenter);

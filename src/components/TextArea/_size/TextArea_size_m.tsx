@@ -1,7 +1,9 @@
-import { withCondition } from '../../../@bem-react/conditional';
+import { withBemMod } from '../../../@bem-react/core';
 
 import { ITextAreaProps } from '../TextArea';
 
 import './TextArea_size_m.css';
 
-export const TextAreaSizeM = withCondition<ITextAreaProps>({ size: 'm' });
+import { textArea } from '../TextArea';
+
+export const TextAreaSizeM = withBemMod<ITextAreaProps>(textArea, { size: 'm' });
