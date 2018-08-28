@@ -6,4 +6,4 @@ import logo from './App-Logo.svg';
 
 export const appLogo = entity('App', 'Logo');
 
-export const Logo: React.SFC = () => <img src={logo} className={String(appLogo)} />;
+export const Logo: React.SFC = () => <img src={logo} className={appLogo()} />;

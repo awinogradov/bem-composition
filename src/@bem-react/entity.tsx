@@ -1,10 +1,12 @@
-import { stringifyWrapper, Stringify } from '@bem/sdk.naming.entity.stringify';
+import { stringifyWrapper } from '@bem/sdk.naming.entity.stringify';
 
 const react = require('@bem/sdk.naming.presets/react');
 
-export type NoStrictMods = Record<string, string | boolean | number | undefined>;
+export type NoStrictEntityMods = Record<string, string | boolean | number | undefined>;
 
-const modsToArray = (block: string, elem?: string, mods?: NoStrictMods) => {
+export type EntityFormatter = (mods?: NoStrictEntityMods) => string;
+
+function modsToArray(block: string, elem?: string, mods?: NoStrictEntityMods) {
     const arr = [];
 
     if (!mods) return [];
@@ -23,37 +25,10 @@ const modsToArray = (block: string, elem?: string, mods?: NoStrictMods) => {
     }
 
     return arr;
-};
-
-export interface IEntity {
-    block: string;
-    elem?: string;
 }
 
-export interface IEntityFormatter {
-    block: string;
-    elem?: string;
-    mods(m?: NoStrictMods): string;
+export function entity(block: string, elem?: string): EntityFormatter {
+    const naming = stringifyWrapper(react);
+
+    return (mods?: NoStrictEntityMods) => modsToArray(block, elem, mods).map(naming).join(' ');
 }
-
-class Entity {
-    block: string;
-    elem?: string;
-    protected naming: Stringify;
-
-    constructor(options: IEntity) {
-        this.block = options.block;
-        this.elem = options.elem;
-        this.naming = stringifyWrapper(react);
-    }
-
-    mods(mods?: NoStrictMods) {
-        return modsToArray(this.block, this.elem, mods).map(this.naming).join(' ');
-    }
-
-    toString() {
-        return this.naming({ block: this.block, elem: this.elem });
-    }
-}
-
-export const entity = (block: string, elem?: string) => new Entity({ block, elem });

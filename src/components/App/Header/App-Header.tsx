@@ -15,7 +15,7 @@ export interface IAppHeaderProps {
 }
 
 export const Header: React.SFC<IAppHeaderProps> = ({ title }) => (
-    <header className={String(appHeader)}>
+    <header className={appHeader()}>
         <Logo />
         <Title text={title} />
         <Link url="http://yandex.ru" text="Interactive link" />

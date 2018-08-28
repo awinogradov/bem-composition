@@ -39,7 +39,7 @@ export class ClearPresenter<P extends ITextAreaClearProps = ITextAreaClearProps>
     }
 }
 
-export const Clear = compose(
-    withInteractive<ITextAreaClearProps>(),
+export const Clear: React.SFC<ITextAreaClearProps> = compose(
+    withInteractive(),
     withBemClassName(textAreaClear, mapPropsToBemMods),
 )(ClearPresenter);

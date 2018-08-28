@@ -18,9 +18,9 @@ import { Wrap } from './Wrap/TextArea-Wrap';
 import { Control } from './Control/TextArea-Control';
 
 export const textArea = entity('TextArea');
-export const textAreaRegistry = new Registry({ id: String(textArea), inverted: true });
+export const textAreaRegistry = new Registry({ id: textArea(), inverted: true });
 
-textAreaRegistry.add(String(textAreaBox), Box);
+textAreaRegistry.add(textAreaBox(), Box);
 
 export type TextareaChangeEventHandler = (value: string, props: ITextAreaProps, options?: { source?: string }) => void;
 
@@ -93,8 +93,8 @@ export class TextAreaPresenter<P extends ITextAreaProps = ITextAreaProps> extend
         return (
             <RegistryConsumer>
                 {registries => {
-                    const registry = registries[String(textArea)];
-                    const TextAreaBox = registry.get(String(textAreaBox));
+                    const registry = registries[textArea()];
+                    const TextAreaBox = registry.get(textAreaBox());
 
                     return (
                         <span className={className} {...dangerouslySetAttrs}>
@@ -119,8 +119,8 @@ export class TextAreaPresenter<P extends ITextAreaProps = ITextAreaProps> extend
     }
 }
 
-export const TextArea = compose(
+export const TextArea: React.SFC<ITextAreaProps> = compose(
     withBemClassName(textArea),
-    withInteractive<ITextAreaProps>(),
-    withRegistry<ITextAreaProps>(textAreaRegistry),
+    withInteractive(),
+    withRegistry(textAreaRegistry),
 )(TextAreaPresenter);

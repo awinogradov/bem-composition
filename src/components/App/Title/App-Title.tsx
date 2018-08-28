@@ -11,6 +11,6 @@ export interface IAppTitleProps {
 
 export class Title extends React.Component<IAppTitleProps> {
     render() {
-        return <h1 className={String(appTitle)}>{this.props.text}</h1>;
+        return <h1 className={appTitle()}>{this.props.text}</h1>;
     }
 }

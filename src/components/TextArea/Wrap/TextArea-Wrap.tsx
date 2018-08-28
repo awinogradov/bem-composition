@@ -10,4 +10,4 @@ export interface ITextAreaWrapProps {
 }
 
 export const Wrap: React.SFC<ITextAreaWrapProps> = props =>
-     <span className={String(textAreaWrap)}>{props.children}</span>;
+     <span className={textAreaWrap()}>{props.children}</span>;

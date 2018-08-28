@@ -37,7 +37,7 @@ export const Control = React.forwardRef((props: ITextAreaControlProps, ref) => {
         disabled,
         placeholder,
         autoComplete,
-        className: String(textAreaControl),
+        className: textAreaControl(),
         ref: ref as React.RefObject<HTMLTextAreaElement>,
     };
 

@@ -5,4 +5,4 @@ import './TextArea-Box.css';
 
 export const textAreaBox = entity('TextArea', 'Box');
 
-export const Box = () => <span className={String(textAreaBox)}/>;
+export const Box = () => <span className={textAreaBox()}/>;

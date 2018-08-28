@@ -16,11 +16,11 @@ import { Header } from './Header/App-Header';
 export const app = entity('App');
 export const appIntro = entity('App', 'Intro');
 
-const textAreaOverrides = new Registry({ id: String(textArea) });
-const textAreaOverrides2 = new Registry({ id: String(textArea) });
+const textAreaOverrides = new Registry({ id: textArea() });
+const textAreaOverrides2 = new Registry({ id: textArea() });
 
-textAreaOverrides.add(String(textAreaBox), () => <section/>);
-textAreaOverrides2.add(String(textAreaBox), () => <abbr/>);
+textAreaOverrides.add(textAreaBox(), () => <section/>);
+textAreaOverrides2.add(textAreaBox(), () => <abbr/>);
 
 const TextAreaWithMods: React.SFC<ITextAreaProps> = compose(
     // withRegistry<ITextAreaProps>(textAreaOverrides), // это важнее чем в App, но перетирает тот что в TextArea
@@ -32,9 +32,9 @@ const TextAreaWithMods: React.SFC<ITextAreaProps> = compose(
 import './App.css';
 
 
-const appRegistry = new Registry({ id: String(app) });
+const appRegistry = new Registry({ id: app() });
 
-appRegistry.add(String(textArea), TextAreaWithMods);
+appRegistry.add(textArea(), TextAreaWithMods);
 
 export interface IAppProps {
     onClick?: React.MouseEventHandler<HTMLDivElement>;
@@ -46,14 +46,14 @@ export interface IAppProps {
 const AppPresenter: React.SFC<IAppProps> = ({ className, onClick }) => (
     <RegistryConsumer>
         {registries => {
-            const registry = registries[String(app)];
+            const registry = registries[app()];
 
-            const TextArea = registry.get<ITextAreaProps>(String(textArea));
+            const TextArea = registry.get<ITextAreaProps>(textArea());
 
             return (
                 <div className={className} onClick={onClick}>
                     <Header title="Welcome to React" />
-                    <p className={appIntro.mods({ theme: 'shit' })}>
+                    <p className={appIntro({ theme: 'shit' })}>
                         To get started, edit <code>src/App.js</code> and save to reload.
                     </p>
                     <TextArea theme="normal" size="m" hasClear text="wow!" />
