@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@bem-react/classname": "0.2.1",
-    "@bem-react/core": "0.2.1",
+    "@bem-react/core": "0.2.3",
     "@bem-react/di": "0.2.2",
     "@typed/compose": "^1.0.0",
     "@types/jest": "^23.1.4",
