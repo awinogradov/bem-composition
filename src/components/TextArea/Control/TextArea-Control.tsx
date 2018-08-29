@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { TextareaHTMLAttributes } from 'react';
-import { entity } from '../../../@bem-react/entity';
+import { cn } from '@bem-react/classname';
 
 import './TextArea-Control.css';
 
-export const textAreaControl = entity('TextArea', 'Control');
+export const textAreaControl = cn('TextArea', 'Control');
 export interface ITextAreaControlProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     id?: string;
     name?: string;

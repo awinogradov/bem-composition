@@ -1,5 +1,5 @@
 import { compose } from '@typed/compose';
-import { withBemClassName } from '../../@bem-react/core';
+import { withBemClassName } from '@bem-react/core';
 
 import { withInteractive } from '../../behaviors/interactive/interactive';
 import { withDesktopInteractive, IInteractiveDesktopProps } from '../../behaviors/interactive/interactive@desktop';

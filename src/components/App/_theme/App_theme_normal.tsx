@@ -1,4 +1,4 @@
-import { withBemMod } from '../../../@bem-react/core';
+import { withBemMod } from '@bem-react/core';
 
 import { IAppProps, app } from '../App';
 

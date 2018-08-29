@@ -1,15 +1,9 @@
 import * as React from 'react';
-import {
-    ChangeEvent,
-    CSSProperties,
-    AllHTMLAttributes,
-    TextareaHTMLAttributes,
-} from 'react';
+import { ChangeEvent, CSSProperties, AllHTMLAttributes, TextareaHTMLAttributes } from 'react';
 import { compose } from '@typed/compose';
-
-import { withBemClassName } from '../../@bem-react/core';
-import { entity } from '../../@bem-react/entity';
-import { withRegistry, RegistryConsumer, Registry } from '../../@bem-react/di';
+import { withBemClassName } from '@bem-react/core';
+import { cn } from '@bem-react/classname';
+import { withRegistry, RegistryConsumer, Registry } from '@bem-react/di';
 
 import { ensureProp } from '../../utils';
 import { withInteractive, IInteractiveProps } from '../../behaviors/interactive/interactive';
@@ -17,10 +11,10 @@ import { textAreaBox, Box } from './Box/TextArea-Box';
 import { Wrap } from './Wrap/TextArea-Wrap';
 import { Control } from './Control/TextArea-Control';
 
-export const textArea = entity('TextArea');
+export const textArea = cn('TextArea');
 export const textAreaRegistry = new Registry({ id: textArea(), inverted: true });
 
-textAreaRegistry.add(textAreaBox(), Box);
+textAreaRegistry.set(textAreaBox(), Box);
 
 export type TextareaChangeEventHandler = (value: string, props: ITextAreaProps, options?: { source?: string }) => void;
 

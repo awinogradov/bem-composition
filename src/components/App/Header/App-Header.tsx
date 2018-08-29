@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { entity } from '../../../@bem-react/entity';
+import { cn } from '@bem-react/classname';
 
 import { Link } from '../../Link/Link@desktop';
 
@@ -8,7 +8,7 @@ import { Title } from '../Title/App-Title';
 
 import './App-Header.css';
 
-export const appHeader = entity('App', 'Header');
+export const appHeader = cn('App', 'Header');
 
 export interface IAppHeaderProps {
     title: string;

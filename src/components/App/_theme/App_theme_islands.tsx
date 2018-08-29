@@ -1,4 +1,4 @@
-import { withBemMod } from '../../../@bem-react/core';
+import { withBemMod } from '@bem-react/core';
 
 import './App_theme_islands.css';
 

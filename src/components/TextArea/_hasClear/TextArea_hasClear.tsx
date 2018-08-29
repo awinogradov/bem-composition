@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { MouseEventHandler, MouseEvent } from 'react';
 import { compose } from '@typed/compose';
-
-import { withBemMod } from '../../../@bem-react/core';
+import { withBemMod } from '@bem-react/core';
 
 import { Clear } from '../Clear/TextArea-Clear';
 import { TextAreaClearVisible } from '../Clear/_visible/TextArea-Clear_visible';

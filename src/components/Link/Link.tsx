@@ -1,15 +1,14 @@
 import * as React from 'react';
 import { CSSProperties } from 'react';
-
-import { withBemClassName } from '../../@bem-react/core';
-import { entity } from '../../@bem-react/entity';
+import { withBemClassName } from '@bem-react/core';
+import { cn } from '@bem-react/classname';
 import { compose } from '@typed/compose';
 
 import { ensureProp } from '../../utils';
 
 import { withInteractive, IInteractiveProps } from '../../behaviors/interactive/interactive';
 
-export const link = entity('Link');
+export const link = cn('Link');
 
 export interface ILinkProps extends IInteractiveProps {
     url: string;

@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { compose } from '@typed/compose';
+import { withBemClassName } from '@bem-react/core';
+import { cn } from '@bem-react/classname';
+import { withRegistry, Registry, RegistryConsumer } from '@bem-react/di';
 
-import { withBemClassName } from '../../@bem-react/core';
-import { entity } from '../../@bem-react/entity';
-import { withRegistry, Registry, RegistryConsumer } from '../../@bem-react/di';
-
-import { textAreaBox } from '../TextArea/Box/TextArea-Box';
 import { textArea, TextArea as Ta, ITextAreaProps } from '../TextArea/TextArea';
 import { TextAreaThemeNormal } from '../TextArea/_theme/TextArea_theme_normal';
 import { TextAreaSizeM } from '../TextArea/_size/TextArea_size_m';
@@ -13,17 +11,10 @@ import { TextAreaHasClear } from '../TextArea/_hasClear/TextArea_hasClear';
 
 import { Header } from './Header/App-Header';
 
-export const app = entity('App');
-export const appIntro = entity('App', 'Intro');
-
-const textAreaOverrides = new Registry({ id: textArea() });
-const textAreaOverrides2 = new Registry({ id: textArea() });
-
-textAreaOverrides.add(textAreaBox(), () => <section/>);
-textAreaOverrides2.add(textAreaBox(), () => <abbr/>);
+export const app = cn('App');
+export const appIntro = cn('App', 'Intro');
 
 const TextAreaWithMods: React.SFC<ITextAreaProps> = compose(
-    // withRegistry<ITextAreaProps>(textAreaOverrides), // это важнее чем в App, но перетирает тот что в TextArea
     TextAreaThemeNormal,
     TextAreaSizeM,
     TextAreaHasClear,
@@ -31,10 +22,9 @@ const TextAreaWithMods: React.SFC<ITextAreaProps> = compose(
 
 import './App.css';
 
-
 const appRegistry = new Registry({ id: app() });
 
-appRegistry.add(textArea(), TextAreaWithMods);
+appRegistry.set(textArea(), TextAreaWithMods);
 
 export interface IAppProps {
     onClick?: React.MouseEventHandler<HTMLDivElement>;

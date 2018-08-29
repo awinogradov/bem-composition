@@ -1,9 +1,9 @@
 import * as React from 'react';
+import { cn } from '@bem-react/classname';
 
-import { entity } from '../../../@bem-react/entity';
 import './TextArea-Wrap.css';
 
-const textAreaWrap = entity('TextArea', 'Wrap');
+const textAreaWrap = cn('TextArea', 'Wrap');
 
 export interface ITextAreaWrapProps {
     children: React.ReactNode;

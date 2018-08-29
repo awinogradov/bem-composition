@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { AllHTMLAttributes } from 'react';
-
-import { withBemClassName } from '../../@bem-react/core';
-import { entity } from '../../@bem-react/entity';
+import { withBemClassName } from '@bem-react/core';
+import { cn } from '@bem-react/classname';
 
 import './Icon.css';
 
-export const icon =  entity('Icon');
+export const icon =  cn('Icon');
 
 export type IconSize = 'ns' | 'xs' | 's' | 'm' | 'n' | 'l' | 'head';
 export type IconDirection = 'left' | 'top' | 'right' | 'bottom';

@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { entity } from '../../../@bem-react/entity';
+import { cn } from '@bem-react/classname';
 
 import './App-Title.css';
 
-export const appTitle = entity('App', 'Title');
+export const appTitle = cn('App', 'Title');
 
 export interface IAppTitleProps {
     text: string;

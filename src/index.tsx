@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-
 import { compose } from '@typed/compose';
 
 import { App } from './components/App/App';
